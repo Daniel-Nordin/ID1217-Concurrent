@@ -71,6 +71,9 @@ int main(int argc, char *argv[]) {
   long l; /* use long in case of a 64-bit system */
   pthread_attr_t attr;
   pthread_t workerid[MAXWORKERS];
+  time_t t;
+  srand((unsigned) time(&t));
+
 
   /* set global thread attributes */
   pthread_attr_init(&attr);
@@ -137,7 +140,7 @@ void *Worker(void *arg) {
         max = matrix[i][j];
         max_index_i = i;
         max_index_j = j;}
-      if (matrix[i][j] < max){
+      if (matrix[i][j] < min){
         min = matrix[i][j];
         min_index_i = i;
         min_index_j = j;}}
