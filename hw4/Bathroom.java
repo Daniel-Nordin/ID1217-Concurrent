@@ -1,6 +1,5 @@
 package hw4;
 
-import java.time.Instant;
 
 public class Bathroom{
     int menInBathroom = 0;
@@ -9,8 +8,7 @@ public class Bathroom{
     long elapsedTime;
 
     public Bathroom(){
-        this.menInBathroom = 0;
-        this.womenInBathroom = 0;
+
         this.startTime = System.currentTimeMillis();
     }
 
@@ -58,9 +56,9 @@ public class Bathroom{
         notifyAll();
     }
 
-    public void useBathrooom(){
+    public void useBathrooom(long bathroomTime){
         try {
-            Thread.sleep(500);
+            Thread.sleep(bathroomTime);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -69,15 +67,22 @@ public class Bathroom{
 
 
     public static void main(String[] args) {
+        int men = 4;
+        int women = 4;
+        if(args.length > 0){
+            men = Integer.parseInt(args[0]);
+            women = Integer.parseInt(args[1]);
+        }
         Bathroom bathroom = new Bathroom();
-        Thread m1 = new Thread(new Male(0, bathroom));
-        m1.start();
-        Thread m2 = new Thread(new Male(1, bathroom));
-        m2.start();
-        Thread f1 = new Thread(new Female(0, bathroom));
-        f1.start();
-        Thread f2 = new Thread(new Female(1, bathroom));
-        f2.start();
+        for(int i = 0; i < men; i++){
+            Thread male = new Thread(new Male(i, bathroom));
+            male.start();
+        }
+        for(int i = 0; i < women; i++){
+            Thread female = new Thread(new Female(i, bathroom));
+            female.start();
+        }
+        
     }
 
 }
