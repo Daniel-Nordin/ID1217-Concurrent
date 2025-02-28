@@ -24,6 +24,10 @@ public class LookForPartner extends UnicastRemoteObject implements RemoteInterfa
             notifyAll();
         }
         else{
+            if(index == queue.length){
+                respons = "You will be alone";
+            }else
+            {
             next++;
             try {
                 wait();
@@ -34,6 +38,7 @@ public class LookForPartner extends UnicastRemoteObject implements RemoteInterfa
            
             respons = "your partner is " + this.queue[next - 1];
             notifyAll();
+            }
         }
         return respons;
     }
