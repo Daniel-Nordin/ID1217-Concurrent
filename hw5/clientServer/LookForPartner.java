@@ -15,19 +15,25 @@ public class LookForPartner extends UnicastRemoteObject implements RemoteInterfa
         this.index = 0;
     }
 
-    public String lookForPartner(int id) throws RemoteException{
+    public synchronized String lookForPartner(int id) throws RemoteException{
         String respons;
         this.queue[index++] = id;
         if(next %2 == 1){
             respons = "your partner is " + this.queue[next - 1];
             next++;
+            notifyAll();
         }
         else{
             next++;
-            while(next %2 == 1){
-
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
+           
             respons = "your partner is " + this.queue[next - 1];
+            notifyAll();
         }
         return respons;
     }

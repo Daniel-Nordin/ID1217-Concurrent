@@ -6,7 +6,7 @@ public class Student {
     
     public static void main(String[] args) {
         String answer;
-        int value = 2;
+        int value = 4;
         try {
             RemoteInterface access = (RemoteInterface)Naming.lookup("rmi://localhost:1900" + "/teacher");
             answer = access.lookForPartner(value);
